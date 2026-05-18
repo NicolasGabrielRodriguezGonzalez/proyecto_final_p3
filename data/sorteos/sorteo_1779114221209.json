@@ -1,0 +1,96 @@
+{
+  "id": "sorteo_1779114221209",
+  "nombre": "sorteo1",
+  "premios": [
+    {
+      "nombre": "celular",
+      "valor": 30
+    }
+  ],
+  "compras": [
+    {
+      "cliente_doc": "111111",
+      "numero_billete": "0001",
+      "fraccion": null,
+      "cliente_nombre": "juan",
+      "valor": 10
+    }
+  ],
+  "realizado": true,
+  "valor_billete": 10,
+  "num_fracciones": 10,
+  "billetes": [
+    {
+      "fracciones_disponibles": [],
+      "numero": "0001"
+    },
+    {
+      "fracciones_disponibles": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "numero": "0002"
+    },
+    {
+      "fracciones_disponibles": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "numero": "0003"
+    },
+    {
+      "fracciones_disponibles": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "numero": "0004"
+    },
+    {
+      "fracciones_disponibles": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "numero": "0005"
+    }
+  ],
+  "ganadores": [
+    {
+      "premio": "celular",
+      "valor": 30,
+      "numero": "0005"
+    }
+  ],
+  "fecha": "2026-05-17"
+}

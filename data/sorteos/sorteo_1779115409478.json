@@ -1,0 +1,36 @@
+{
+  "id": "sorteo_1779115409478",
+  "nombre": "sorteo3",
+  "premios": [
+    {
+      "nombre": "premio3",
+      "valor": 30
+    }
+  ],
+  "compras": [
+    {
+      "cliente_doc": "111111",
+      "numero_billete": "0001",
+      "fraccion": null,
+      "cliente_nombre": "juan",
+      "valor": 10
+    }
+  ],
+  "realizado": true,
+  "valor_billete": 10,
+  "num_fracciones": 10,
+  "billetes": [
+    {
+      "fracciones_disponibles": [],
+      "numero": "0001"
+    }
+  ],
+  "ganadores": [
+    {
+      "premio": "premio3",
+      "valor": 30,
+      "numero": "0001"
+    }
+  ],
+  "fecha": "2026-05-18"
+}

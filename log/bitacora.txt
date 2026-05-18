@@ -1,0 +1,146 @@
+# AZAR S.A. - Bitácora del sistema
+# Formato: [fecha - hora] solicitud => resultado
+============================================================
+[2026-05-18 09:21:58] INFO: SorteoSupervisor arrancando...
+[2026-05-18 09:21:58] INFO: SorteoServer iniciado: Lotería del Quindío (sorteo_001)
+[2026-05-18 09:21:58] INFO:   ✓ Sorteo cargado: sorteo_001 (pid: #PID<0.190.0>)
+[2026-05-18 09:21:58] INFO: SorteoServer iniciado: Chance del Eje Cafetero (sorteo_002)
+[2026-05-18 09:21:58] INFO:   ✓ Sorteo cargado: sorteo_002 (pid: #PID<0.193.0>)
+[2026-05-18 09:21:58] INFO: SorteoSupervisor listo. 2 sorteo(s) activo(s).
+============================================================
+[2026-05-18 09:21:58] INFO: Router iniciado y registrado globalmente (pid: #PID<0.198.0>)
+[2026-05-18 09:21:58] INFO: Servidor iniciado. Nodo: server@LAPTOP-3K3V2TBB
+[2026-05-18 09:22:10] listar_sorteos => OK
+[2026-05-18 09:22:52] listar_sorteos => OK
+[2026-05-18 09:23:41] INFO: SorteoServer iniciado: sorteo1 (sorteo_1779114221209)
+[2026-05-18 09:23:41] INFO: Nuevo sorteo iniciado: sorteo_1779114221209
+[2026-05-18 09:23:41] crear_sorteo:sorteo1 => OK
+[2026-05-18 09:23:47] listar_sorteos => OK
+[2026-05-18 09:24:19] listar_sorteos => OK
+[2026-05-18 09:24:28] get_sorteo:sorteo_1779114221209 => OK
+[2026-05-18 09:24:43] agregar_premio:sorteo_1779114221209:celular => OK
+[2026-05-18 09:26:23] registrar_cliente:111111 => OK
+[2026-05-18 09:26:36] login:111111 => OK
+[2026-05-18 09:26:52] sorteos_disponibles => OK
+[2026-05-18 09:27:12] sorteos_disponibles => OK
+[2026-05-18 09:31:41] get_sorteo:sorteo_1779114221209 => OK
+[2026-05-18 09:31:56] comprar:sorteo_1779114221209:111111:0001 => OK
+[2026-05-18 09:32:15] listar_sorteos => OK
+[2026-05-18 09:32:26] realizar_sorteo:sorteo_001 => NEGADO
+[2026-05-18 09:32:26] realizar_sorteo:sorteo_002 => NEGADO
+[2026-05-18 09:32:26] realizar_sorteo:sorteo_1779114221209 => OK
+[2026-05-18 09:32:43] listar_sorteos => OK
+[2026-05-18 09:33:18] realizar_sorteo:sorteo_001 => NEGADO
+[2026-05-18 09:33:33] sorteos_disponibles => OK
+[2026-05-18 09:33:47] get_notificaciones:111111 => OK
+[2026-05-18 09:34:21] listar_sorteos => OK
+[2026-05-18 09:34:48] INFO: SorteoServer iniciado: sorteo7 (sorteo_1779114888140)
+[2026-05-18 09:34:48] INFO: Nuevo sorteo iniciado: sorteo_1779114888140
+[2026-05-18 09:34:48] crear_sorteo:sorteo7 => OK
+[2026-05-18 09:34:57] listar_sorteos => OK
+[2026-05-18 09:35:05] get_sorteo:sorteo_1779114888140 => OK
+[2026-05-18 09:35:11] agregar_premio:sorteo_1779114888140:premio1 => OK
+[2026-05-18 09:35:24] sorteos_disponibles => OK
+[2026-05-18 09:35:29] sorteos_disponibles => OK
+[2026-05-18 09:35:45] get_sorteo:sorteo_1779114888140 => OK
+[2026-05-18 09:36:07] comprar:sorteo_1779114888140:111111:0001 => OK
+[2026-05-18 09:36:13] listar_sorteos => OK
+[2026-05-18 09:36:18] realizar_sorteo:sorteo_001 => NEGADO
+[2026-05-18 09:36:18] realizar_sorteo:sorteo_002 => NEGADO
+[2026-05-18 09:36:18] realizar_sorteo:sorteo_1779114888140 => OK
+[2026-05-18 09:36:32] listar_sorteos => OK
+[2026-05-18 09:36:37] sorteos_disponibles => OK
+[2026-05-18 09:37:09] INFO: SorteoServer iniciado: sorteo9 (sorteo_1779115029424)
+[2026-05-18 09:37:09] INFO: Nuevo sorteo iniciado: sorteo_1779115029424
+[2026-05-18 09:37:09] crear_sorteo:sorteo9 => OK
+[2026-05-18 09:37:17] listar_sorteos => OK
+[2026-05-18 09:37:23] get_sorteo:sorteo_1779115029424 => OK
+[2026-05-18 09:37:30] agregar_premio:sorteo_1779115029424:celu => OK
+[2026-05-18 09:37:40] sorteos_disponibles => OK
+[2026-05-18 09:37:51] sorteos_disponibles => OK
+[2026-05-18 09:38:03] get_sorteo:sorteo_1779115029424 => OK
+[2026-05-18 09:38:09] comprar:sorteo_1779115029424:111111:0001 => OK
+[2026-05-18 09:38:14] listar_sorteos => OK
+[2026-05-18 09:38:22] realizar_sorteo:sorteo_001 => NEGADO
+[2026-05-18 09:38:22] realizar_sorteo:sorteo_002 => NEGADO
+[2026-05-18 09:38:22] realizar_sorteo:sorteo_1779115029424 => OK
+[2026-05-18 09:38:41] get_notificaciones:111111 => OK
+============================================================
+[2026-05-18 09:42:27] INFO: SorteoSupervisor arrancando...
+[2026-05-18 09:42:27] INFO: SorteoServer iniciado: Lotería del Quindío (sorteo_001)
+[2026-05-18 09:42:27] INFO:   ✓ Sorteo cargado: sorteo_001 (pid: #PID<0.189.0>)
+[2026-05-18 09:42:27] INFO: SorteoServer iniciado: Chance del Eje Cafetero (sorteo_002)
+[2026-05-18 09:42:27] INFO:   ✓ Sorteo cargado: sorteo_002 (pid: #PID<0.192.0>)
+[2026-05-18 09:42:27] INFO: SorteoServer iniciado: sorteo1 (sorteo_1779114221209)
+[2026-05-18 09:42:27] INFO:   ✓ Sorteo cargado: sorteo_1779114221209 (pid: #PID<0.195.0>)
+[2026-05-18 09:42:27] INFO: SorteoServer iniciado: sorteo7 (sorteo_1779114888140)
+[2026-05-18 09:42:27] INFO:   ✓ Sorteo cargado: sorteo_1779114888140 (pid: #PID<0.198.0>)
+[2026-05-18 09:42:27] INFO: SorteoServer iniciado: sorteo9 (sorteo_1779115029424)
+[2026-05-18 09:42:27] INFO:   ✓ Sorteo cargado: sorteo_1779115029424 (pid: #PID<0.201.0>)
+[2026-05-18 09:42:27] INFO: SorteoSupervisor listo. 5 sorteo(s) activo(s).
+============================================================
+[2026-05-18 09:42:27] INFO: Router iniciado y registrado globalmente (pid: #PID<0.206.0>)
+[2026-05-18 09:42:27] INFO: Servidor iniciado. Nodo: server@LAPTOP-3K3V2TBB
+[2026-05-18 09:42:35] listar_sorteos => OK
+[2026-05-18 09:42:59] listar_sorteos => OK
+[2026-05-18 09:43:29] INFO: SorteoServer iniciado: sorteo3 (sorteo_1779115409478)
+[2026-05-18 09:43:29] INFO: Nuevo sorteo iniciado: sorteo_1779115409478
+[2026-05-18 09:43:29] crear_sorteo:sorteo3 => OK
+[2026-05-18 09:43:40] listar_sorteos => OK
+[2026-05-18 09:43:45] get_sorteo:sorteo_1779115409478 => OK
+[2026-05-18 09:43:53] agregar_premio:sorteo_1779115409478:premio3 => OK
+[2026-05-18 09:44:06] login:111111 => OK
+[2026-05-18 09:44:14] sorteos_disponibles => OK
+[2026-05-18 09:44:20] sorteos_disponibles => OK
+[2026-05-18 09:44:30] get_sorteo:sorteo_1779115409478 => OK
+[2026-05-18 09:44:35] comprar:sorteo_1779115409478:111111:0001 => OK
+[2026-05-18 09:44:40] listar_sorteos => OK
+[2026-05-18 09:44:46] realizar_sorteo:sorteo_001 => NEGADO
+[2026-05-18 09:44:46] realizar_sorteo:sorteo_002 => NEGADO
+[2026-05-18 09:44:46] realizar_sorteo:sorteo_1779115409478 => OK
+[2026-05-18 09:45:04] get_notificaciones:111111 => OK
+[2026-05-18 09:55:25] listar_sorteos => OK
+[2026-05-18 09:56:02] listar_sorteos => OK
+[2026-05-18 09:56:10] listar_sorteos => OK
+[2026-05-18 09:56:19] listar_sorteos => OK
+[2026-05-18 09:56:19] get_sorteo:sorteo_1779114221209 => OK
+[2026-05-18 09:56:19] get_sorteo:sorteo_1779114888140 => OK
+[2026-05-18 09:56:19] get_sorteo:sorteo_1779115029424 => OK
+[2026-05-18 09:56:19] get_sorteo:sorteo_1779115409478 => OK
+[2026-05-18 09:56:35] listar_sorteos => OK
+[2026-05-18 09:56:47] get_sorteo:sorteo_002 => OK
+[2026-05-18 09:57:13] listar_sorteos => OK
+[2026-05-18 09:57:26] listar_sorteos => OK
+[2026-05-18 09:57:30] get_sorteo:sorteo_001 => OK
+[2026-05-18 09:57:40] eliminar_premio:sorteo_001:Premio Mayor => OK
+[2026-05-18 09:57:45] listar_sorteos => OK
+[2026-05-18 09:58:06] listar_sorteos => OK
+[2026-05-18 09:58:21] eliminar_sorteo:sorteo_1779115409478 => NEGADO - tiene premios
+[2026-05-18 09:58:40] listar_sorteos => OK
+[2026-05-18 09:58:46] eliminar_sorteo:sorteo_001 => NEGADO - tiene premios
+[2026-05-18 09:59:09] listar_sorteos => OK
+[2026-05-18 09:59:21] get_clientes:sorteo_1779115409478 => OK
+[2026-05-18 09:59:34] listar_sorteos => OK
+[2026-05-18 09:59:34] get_ingresos:sorteo_001 => OK
+[2026-05-18 09:59:34] get_ingresos:sorteo_002 => OK
+[2026-05-18 09:59:34] get_ingresos:sorteo_1779114221209 => OK
+[2026-05-18 09:59:34] get_ingresos:sorteo_1779114888140 => OK
+[2026-05-18 09:59:34] get_ingresos:sorteo_1779115029424 => OK
+[2026-05-18 09:59:34] get_ingresos:sorteo_1779115409478 => OK
+[2026-05-18 09:59:39] listar_sorteos => OK
+[2026-05-18 09:59:39] get_ingresos:sorteo_001 => OK
+[2026-05-18 09:59:39] get_ingresos:sorteo_002 => OK
+[2026-05-18 09:59:39] get_ingresos:sorteo_1779114221209 => OK
+[2026-05-18 09:59:39] get_ingresos:sorteo_1779114888140 => OK
+[2026-05-18 09:59:39] get_ingresos:sorteo_1779115029424 => OK
+[2026-05-18 09:59:39] get_ingresos:sorteo_1779115409478 => OK
+[2026-05-18 09:59:44] listar_sorteos => OK
+[2026-05-18 09:59:44] get_ingresos:sorteo_1779114221209 => OK
+[2026-05-18 09:59:44] get_ingresos:sorteo_1779114888140 => OK
+[2026-05-18 09:59:44] get_ingresos:sorteo_1779115029424 => OK
+[2026-05-18 09:59:44] get_ingresos:sorteo_1779115409478 => OK
+[2026-05-18 09:59:47] listar_sorteos => OK
+[2026-05-18 09:59:47] get_ingresos:sorteo_1779114221209 => OK
+[2026-05-18 09:59:47] get_ingresos:sorteo_1779114888140 => OK
+[2026-05-18 09:59:47] get_ingresos:sorteo_1779115029424 => OK
+[2026-05-18 09:59:47] get_ingresos:sorteo_1779115409478 => OK

@@ -1,0 +1,54 @@
+[
+  {
+    "nombre": "Carlos Andrés Gómez",
+    "compras": [],
+    "documento": "1094500001",
+    "notificaciones": [],
+    "contrasena": "1234",
+    "tarjeta": "4111111111111111"
+  },
+  {
+    "nombre": "María Fernanda López",
+    "compras": [],
+    "documento": "1094500002",
+    "notificaciones": [],
+    "contrasena": "abcd",
+    "tarjeta": "5500005555555559"
+  },
+  {
+    "nombre": "juan",
+    "compras": [
+      {
+        "sorteo_id": "sorteo_1779114221209",
+        "numero_billete": "0001",
+        "fraccion": null,
+        "valor": 10
+      },
+      {
+        "sorteo_id": "sorteo_1779114888140",
+        "numero_billete": "0001",
+        "fraccion": null,
+        "valor": 30
+      },
+      {
+        "sorteo_id": "sorteo_1779115029424",
+        "numero_billete": "0001",
+        "fraccion": null,
+        "valor": 2
+      },
+      {
+        "sorteo_id": "sorteo_1779115409478",
+        "numero_billete": "0001",
+        "fraccion": null,
+        "valor": 10
+      }
+    ],
+    "documento": "111111",
+    "notificaciones": [
+      "🎉 ¡Ganaste en sorteo9! Premio: celu - Número: 0001 - Valor: $50",
+      "Ganaste en sorteo3! Premio: premio3 - Numero: 0001 - Valor: $30"
+    ],
+    "contrasena": "1111",
+    "tarjeta": "11111"
+  }
+]

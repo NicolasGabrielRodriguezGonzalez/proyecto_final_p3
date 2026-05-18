@@ -1,0 +1,72 @@
+{
+  "id": "sorteo_001",
+  "nombre": "Lotería del Quindío",
+  "premios": [
+    {
+      "nombre": "Segundo Premio",
+      "valor": 100000
+    },
+    {
+      "nombre": "Tercer Premio",
+      "valor": 50000
+    }
+  ],
+  "compras": [],
+  "realizado": false,
+  "valor_billete": 10000,
+  "num_fracciones": 5,
+  "billetes": [
+    {
+      "fracciones_disponibles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "numero": "0001"
+    },
+    {
+      "fracciones_disponibles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "numero": "0002"
+    },
+    {
+      "fracciones_disponibles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "numero": "0003"
+    },
+    {
+      "fracciones_disponibles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "numero": "0004"
+    },
+    {
+      "fracciones_disponibles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "numero": "0005"
+    }
+  ],
+  "ganadores": null,
+  "fecha": "2025-06-15"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "sorteo_1779115029424",
+  "nombre": "sorteo9",
+  "premios": [
+    {
+      "nombre": "celu",
+      "valor": 50
+    }
+  ],
+  "compras": [
+    {
+      "cliente_doc": "111111",
+      "numero_billete": "0001",
+      "fraccion": null,
+      "cliente_nombre": "juan",
+      "valor": 2
+    }
+  ],
+  "realizado": true,
+  "valor_billete": 2,
+  "num_fracciones": 1,
+  "billetes": [
+    {
+      "fracciones_disponibles": [],
+      "numero": "0001"
+    }
+  ],
+  "ganadores": [
+    {
+      "premio": "celu",
+      "valor": 50,
+      "numero": "0001"
+    }
+  ],
+  "fecha": "2026-05-18"
+}

@@ -1,0 +1,20 @@
+{
+  "id": "sorteo_002",
+  "nombre": "Chance del Eje Cafetero",
+  "fecha": "2025-07-01",
+  "valor_billete": 5000,
+  "num_fracciones": 2,
+  "billetes": [
+    { "numero": "0001", "fracciones_disponibles": [1, 2] },
+    { "numero": "0002", "fracciones_disponibles": [1, 2] },
+    { "numero": "0003", "fracciones_disponibles": [1, 2] },
+    { "numero": "0004", "fracciones_disponibles": [1, 2] },
+    { "numero": "0005", "fracciones_disponibles": [1, 2] }
+  ],
+  "premios": [
+    { "nombre": "Premio Único", "valor": 200000 }
+  ],
+  "compras": [],
+  "ganadores": null,
+  "realizado": false
+}
