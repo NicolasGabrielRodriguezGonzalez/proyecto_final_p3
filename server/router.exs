@@ -12,11 +12,6 @@ defmodule Azar.Server.Router do
 
   @name :azar_router
 
-  # ------------------------------------------------------------
-  # API PÚBLICA — llamada desde admin.exs y player.exs
-  # Esta función es la única que los clientes necesitan conocer
-  # ------------------------------------------------------------
-
   def start do
     case GenServer.start_link(__MODULE__, [], name: {:global, @name}) do
       {:ok, pid} ->
@@ -33,13 +28,6 @@ defmodule Azar.Server.Router do
     end
   end
 
-  @doc """
-  Función principal que usan los clientes remotos.
-  Ejemplo desde admin:
-    Azar.Server.Router.llamar({:crear_sorteo, datos})
-  Ejemplo desde player:
-    Azar.Server.Router.llamar({:comprar, "sorteo_001", "123456", "0001", 2})
-  """
   def llamar(solicitud) do
     GenServer.call({:global, @name}, solicitud, 10_000)
   end
@@ -50,14 +38,78 @@ defmodule Azar.Server.Router do
 
   @impl true
   def init(_) do
+    # Activar monitor de nodos — avisa cuando admin/player se conectan
+    :net_kernel.monitor_nodes(true)
     {:ok, %{}}
+  end
+
+  # IPs permitidas para conectarse al servidor
+  @ips_permitidas ["192.168.1.57", "192.168.1.59"]
+
+  # Detectar cuando un nodo se conecta
+  @impl true
+  def handle_info({:nodeup, nodo}, state) do
+    nodo_str = to_string(nodo)
+    ip = nodo_str |> String.split("@") |> Enum.at(1)
+    tipo = cond do
+      String.starts_with?(nodo_str, "admin")  -> "ADMINISTRADOR"
+      String.starts_with?(nodo_str, "player") -> "JUGADOR"
+      true                                     -> "NODO"
+    end
+
+    if ip in @ips_permitidas do
+      IO.puts("")
+      IO.puts("╔══════════════════════════════════════════════╗")
+      IO.puts("║  [+] " <> tipo <> " CONECTADO")
+      IO.puts("║      Nodo : " <> nodo_str)
+      IO.puts("║      IP   : " <> ip)
+      IO.puts("╚══════════════════════════════════════════════╝")
+      Azar.Server.Logger.log("conexion:" <> nodo_str, :ok)
+    else
+      IO.puts("")
+      IO.puts("╔══════════════════════════════════════════════╗")
+      IO.puts("║  [!] CONEXION RECHAZADA")
+      IO.puts("║      Nodo : " <> nodo_str)
+      IO.puts("║      IP   : " <> ip <> " (no autorizada)")
+      IO.puts("╚══════════════════════════════════════════════╝")
+      Azar.Server.Logger.log("conexion_rechazada:" <> nodo_str, {:error, "ip no autorizada"})
+      # Desconectar el nodo inmediatamente
+      Node.disconnect(nodo)
+    end
+
+    {:noreply, state}
+  end
+
+  # Detectar cuando un nodo se desconecta
+  @impl true
+  def handle_info({:nodedown, nodo}, state) do
+    nodo_str = to_string(nodo)
+    tipo = cond do
+      String.starts_with?(nodo_str, "admin")  -> "ADMINISTRADOR"
+      String.starts_with?(nodo_str, "player") -> "JUGADOR"
+      true                                     -> "NODO"
+    end
+    ip = nodo_str |> String.split("@") |> Enum.at(1)
+    IO.puts("")
+    IO.puts("╔══════════════════════════════════════════════╗")
+    IO.puts("║  [-] " <> tipo <> " DESCONECTADO")
+    IO.puts("║      Nodo : " <> nodo_str)
+    IO.puts("║      IP   : " <> ip)
+    IO.puts("╚══════════════════════════════════════════════╝")
+    Azar.Server.Logger.log("desconexion:" <> nodo_str, :ok)
+    {:noreply, state}
+  end
+
+  # Ignorar otros mensajes de info
+  @impl true
+  def handle_info(_msg, state) do
+    {:noreply, state}
   end
 
   # ============================================================
   # SOLICITUDES DE SORTEOS (Admin)
   # ============================================================
 
-  # Listar todos los sorteos
   @impl true
   def handle_call(:listar_sorteos, _from, state) do
     resultado = cargar_todos_los_sorteos()
@@ -65,7 +117,6 @@ defmodule Azar.Server.Router do
     {:reply, {:ok, resultado}, state}
   end
 
-  # Crear un nuevo sorteo
   @impl true
   def handle_call({:crear_sorteo, datos}, _from, state) do
     sorteo_id = "sorteo_#{:os.system_time(:millisecond)}"
@@ -90,13 +141,11 @@ defmodule Azar.Server.Router do
     {:reply, {:ok, sorteo_id}, state}
   end
 
-  # Eliminar un sorteo
   @impl true
   def handle_call({:eliminar_sorteo, sorteo_id}, _from, state) do
     case Azar.Server.SorteoServer.get_info(sorteo_id) do
       {:ok, sorteo} ->
         premios = sorteo.premios || []
-
         if length(premios) > 0 do
           Azar.Server.Logger.log("eliminar_sorteo:#{sorteo_id}", {:error, "tiene premios"})
           {:reply, {:error, "No se puede eliminar: el sorteo tiene premios asociados"}, state}
@@ -106,13 +155,11 @@ defmodule Azar.Server.Router do
           Azar.Server.Logger.log("eliminar_sorteo:#{sorteo_id}", :ok)
           {:reply, {:ok, "Sorteo eliminado"}, state}
         end
-
       error ->
         {:reply, error, state}
     end
   end
 
-  # Consultar info de un sorteo
   @impl true
   def handle_call({:get_sorteo, sorteo_id}, _from, state) do
     resultado = Azar.Server.SorteoServer.get_info(sorteo_id)
@@ -120,7 +167,6 @@ defmodule Azar.Server.Router do
     {:reply, resultado, state}
   end
 
-  # Consultar clientes de un sorteo
   @impl true
   def handle_call({:get_clientes_sorteo, sorteo_id}, _from, state) do
     resultado = Azar.Server.SorteoServer.get_clientes(sorteo_id)
@@ -128,7 +174,6 @@ defmodule Azar.Server.Router do
     {:reply, resultado, state}
   end
 
-  # Consultar ingresos de un sorteo
   @impl true
   def handle_call({:get_ingresos, sorteo_id}, _from, state) do
     resultado = Azar.Server.SorteoServer.get_ingresos(sorteo_id)
@@ -140,7 +185,6 @@ defmodule Azar.Server.Router do
   # SOLICITUDES DE PREMIOS (Admin)
   # ============================================================
 
-  # Agregar premio a un sorteo
   @impl true
   def handle_call({:agregar_premio, sorteo_id, premio}, _from, state) do
     resultado = Azar.Server.SorteoServer.agregar_premio(sorteo_id, premio)
@@ -148,7 +192,6 @@ defmodule Azar.Server.Router do
     {:reply, resultado, state}
   end
 
-  # Eliminar premio de un sorteo
   @impl true
   def handle_call({:eliminar_premio, sorteo_id, nombre_premio}, _from, state) do
     resultado = Azar.Server.SorteoServer.eliminar_premio(sorteo_id, nombre_premio)
@@ -156,7 +199,6 @@ defmodule Azar.Server.Router do
     {:reply, resultado, state}
   end
 
-  # Listar premios de todos los sorteos
   @impl true
   def handle_call(:listar_premios, _from, state) do
     sorteos = cargar_todos_los_sorteos()
@@ -167,21 +209,16 @@ defmodule Azar.Server.Router do
     {:reply, {:ok, premios}, state}
   end
 
-  # Ejecutar sorteos pendientes hasta fecha dada
   @impl true
   def handle_call({:actualizar_fecha, fecha_limite}, _from, state) do
     sorteos = cargar_todos_los_sorteos()
-
     ejecutados = sorteos
-      |> Enum.filter(fn s ->
-        not s.realizado and s.fecha <= fecha_limite
-      end)
+      |> Enum.filter(fn s -> not s.realizado and s.fecha <= fecha_limite end)
       |> Enum.map(fn s ->
         resultado = Azar.Server.SorteoServer.realizar(s.id)
         Azar.Server.Logger.log("realizar_sorteo:#{s.id}", elem(resultado, 0))
         {s.id, resultado}
       end)
-
     {:reply, {:ok, ejecutados}, state}
   end
 
@@ -189,12 +226,10 @@ defmodule Azar.Server.Router do
   # SOLICITUDES DE CLIENTES (Player)
   # ============================================================
 
-  # Registrar nuevo cliente
   @impl true
   def handle_call({:registrar_cliente, datos}, _from, state) do
     path = "data/clientes.json"
     clientes = Azar.Shared.JsonStore.read_list(path)
-
     ya_existe = Enum.any?(clientes, &("#{&1.documento}" == "#{datos.documento}"))
 
     if ya_existe do
@@ -215,11 +250,9 @@ defmodule Azar.Server.Router do
     end
   end
 
-  # Login de cliente
   @impl true
   def handle_call({:login, documento, contrasena}, _from, state) do
     clientes = Azar.Shared.JsonStore.read_list("data/clientes.json")
-
     cliente = Enum.find(clientes, fn c ->
       "#{c.documento}" == "#{documento}" and c.contrasena == contrasena
     end)
@@ -229,11 +262,10 @@ defmodule Azar.Server.Router do
       {:reply, {:ok, cliente}, state}
     else
       Azar.Server.Logger.log("login:#{documento}", {:error, "credenciales invalidas"})
-      {:reply, {:error, "Documento o contraseña incorrectos"}, state}
+      {:reply, {:error, "Documento o contrasena incorrectos"}, state}
     end
   end
 
-  # Listar sorteos disponibles (no realizados)
   @impl true
   def handle_call(:sorteos_disponibles, _from, state) do
     disponibles = cargar_todos_los_sorteos()
@@ -243,7 +275,6 @@ defmodule Azar.Server.Router do
     {:reply, {:ok, disponibles}, state}
   end
 
-  # Comprar billete o fracción
   @impl true
   def handle_call({:comprar, sorteo_id, cliente_doc, numero, fraccion}, _from, state) do
     resultado = Azar.Server.SorteoServer.comprar(sorteo_id, cliente_doc, numero, fraccion)
@@ -251,7 +282,6 @@ defmodule Azar.Server.Router do
     {:reply, resultado, state}
   end
 
-  # Devolver billete o fracción
   @impl true
   def handle_call({:devolver, sorteo_id, cliente_doc, numero, fraccion}, _from, state) do
     resultado = Azar.Server.SorteoServer.devolver(sorteo_id, cliente_doc, numero, fraccion)
@@ -259,7 +289,6 @@ defmodule Azar.Server.Router do
     {:reply, resultado, state}
   end
 
-  # Consultar notificaciones de un cliente
   @impl true
   def handle_call({:get_notificaciones, cliente_doc}, _from, state) do
     clientes = Azar.Shared.JsonStore.read_list("data/clientes.json")
@@ -299,8 +328,8 @@ defmodule Azar.Server.Router do
     fracciones = Enum.to_list(1..num_fracciones)
     Enum.map(1..cantidad, fn n ->
       %{
-        numero:                  String.pad_leading("#{n}", 4, "0"),
-        fracciones_disponibles:  fracciones
+        numero:                 String.pad_leading("#{n}", 4, "0"),
+        fracciones_disponibles: fracciones
       }
     end)
   end

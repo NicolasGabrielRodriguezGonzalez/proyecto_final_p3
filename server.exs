@@ -1,6 +1,6 @@
 # =============================================================
 #  AZAR S.A. - Servidor Central
-#  Ejecutar: elixir --name server@IP_SERVIDOR --cookie azar server.exs
+#  Ejecutar: elixir --name server@192.168.1.59 --cookie azar server.exs
 # =============================================================
 
 Mix.install([{:jason, "~> 1.4"}])
@@ -10,14 +10,6 @@ Code.require_file("server/logger.exs",            __DIR__)
 Code.require_file("server/sorteo_server.exs",     __DIR__)
 Code.require_file("server/sorteo_supervisor.exs", __DIR__)
 Code.require_file("server/router.exs",            __DIR__)
-
-# =====================================================
-# CAMBIA ESTAS IPs POR LAS REALES DE TU RED
-ip_admin  = "192.168.1.57"   # IP del PC que corre admin
-ip_player = "192.168.1.57"   # IP del PC que corre player
-#                               (si admin y player estan en el
-#                                mismo PC, usan la misma IP)
-# =====================================================
 
 IO.puts("")
 IO.puts("╔══════════════════════════════════════════════╗")
@@ -59,25 +51,53 @@ IO.puts("")
 
 Azar.Server.Logger.info("Servidor iniciado. Nodo: " <> nodo)
 
-# Conectar a admin y player despues de 3 segundos
-# para que los 3 nodos se vean entre si
+# Monitorear conexiones y desconexiones de nodos
+# :net_kernel.monitor_nodes/1 avisa cuando un nodo se conecta o desconecta
+:net_kernel.monitor_nodes(true)
+
+# Proceso que escucha eventos de conexion/desconexion
 spawn(fn ->
-  :timer.sleep(3000)
-  admin_node  = String.to_atom("admin@"  <> ip_admin)
-  player_node = String.to_atom("player@" <> ip_player)
+  loop_monitor = fn loop ->
+    receive do
+      {:nodeup, nodo_remoto} ->
+        nodo_str  = to_string(nodo_remoto)
+        tipo      = cond do
+          String.starts_with?(nodo_str, "admin")  -> "ADMINISTRADOR"
+          String.starts_with?(nodo_str, "player") -> "JUGADOR"
+          true                                     -> "NODO"
+        end
+        ip = nodo_str |> String.split("@") |> Enum.at(1)
+        IO.puts("")
+        IO.puts("╔══════════════════════════════════════════════╗")
+        IO.puts("║  [+] " <> tipo <> " CONECTADO")
+        IO.puts("║      Nodo : " <> nodo_str)
+        IO.puts("║      IP   : " <> ip)
+        IO.puts("╚══════════════════════════════════════════════╝")
+        Azar.Server.Logger.log("conexion:" <> nodo_str, :ok)
+        loop.(loop)
 
-  case Node.connect(admin_node) do
-    true  -> IO.puts(" [OK] Admin conectado:  " <> to_string(admin_node))
-    false -> IO.puts(" [INFO] Admin aun no disponible: " <> to_string(admin_node))
+      {:nodedown, nodo_remoto} ->
+        nodo_str  = to_string(nodo_remoto)
+        tipo      = cond do
+          String.starts_with?(nodo_str, "admin")  -> "ADMINISTRADOR"
+          String.starts_with?(nodo_str, "player") -> "JUGADOR"
+          true                                     -> "NODO"
+        end
+        ip = nodo_str |> String.split("@") |> Enum.at(1)
+        IO.puts("")
+        IO.puts("╔══════════════════════════════════════════════╗")
+        IO.puts("║  [-] " <> tipo <> " DESCONECTADO")
+        IO.puts("║      Nodo : " <> nodo_str)
+        IO.puts("║      IP   : " <> ip)
+        IO.puts("╚══════════════════════════════════════════════╝")
+        Azar.Server.Logger.log("desconexion:" <> nodo_str, :ok)
+        loop.(loop)
+    end
   end
-
-  case Node.connect(player_node) do
-    true  -> IO.puts(" [OK] Player conectado: " <> to_string(player_node))
-    false -> IO.puts(" [INFO] Player aun no disponible: " <> to_string(player_node))
-  end
+  loop_monitor.(loop_monitor)
 end)
 
-IO.puts(" Esperando conexiones...")
+IO.puts(" Esperando conexiones de admin y player...")
 IO.puts("")
 
 Process.sleep(:infinity)
